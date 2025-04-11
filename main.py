@@ -132,7 +132,7 @@ def robustEM(X, eps = 1e-4, maxIter = 100) :
         alpha1_old = np.max(alpha_old)
 
         beta = (1/c) * (np.sum(np.exp(-eta * n * abs(alpha_new - alpha_old))))
-        beta = min(beta , (1 - alpha1_EM) / (-alpha1_old * E))
+        beta = min(beta , (1 - alpha1_EM) / (-alpha1_old * E + 1e-6))
 
         # Step 7 : Discard appropriate centers
 
@@ -155,7 +155,14 @@ def robustEM(X, eps = 1e-4, maxIter = 100) :
         z = z_new / np.sum(z_new, axis = 0, keepdims= True)
         alpha = alpha_new / np.sum(alpha_new, axis = 0, keepdims= True)
         mu = np.array(mu_new)
+
+        if (iteration > 60 and (c == c_new)) : 
+            beta = 0
+
+
         c = c_new
+
+        
 
         # Step 8 : Perform the routine updates
 

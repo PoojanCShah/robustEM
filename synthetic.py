@@ -11,13 +11,13 @@ from sklearn.decomposition import PCA
 
 n_samples = 500
 n_features = 2
-true_clusters = [(0,0),(5,0),(10,10),(15,0),(20,0)]
-X, y_true = make_blobs(n_samples=n_samples, centers=true_clusters, cluster_std=0.60, random_state=42)
+true_clusters = [(0,0),(100,0)]
+X, y_true = make_blobs(n_samples=n_samples, centers=true_clusters, cluster_std=[5,10], random_state=42)
 
 
 # Run robust EM
 
-alpha, mu, sigma, z = robustEM(X)
+alpha, mu, sigma, z = robustEM(X, maxIter=1000)
 
 
 # Predict cluster assignment
